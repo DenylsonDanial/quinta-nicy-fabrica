@@ -34,6 +34,16 @@ Plans:
 - [ ] 01-02-PLAN.md - Implementar consulta composta e bloqueio de submit na UI de compras (BILL-02, BILL-04).
 **UI hint**: yes
 
+### Phase 01.1: Limpeza de funcionalidades obsoletas e simplificacao de fluxos legados (INSERTED)
+
+**Goal:** Reduzir ruido de compatibilidade legada em rotas/admin para preparar base mais previsivel antes da Fase 2.
+**Requirements**: N/A (housekeeping tecnico)
+**Depends on:** Phase 1
+**Plans:** 1 plan
+
+Plans:
+- [x] 01.1-01-PLAN.md - Remover duplicidade de rota legada e alinhar testes de contrato de rotas aos paths atuais.
+
 ### Phase 2: Integridade e Seguranca Operacional
 **Goal**: Operacoes criticas de faturacao e stock ficam corrigiveis com auditoria completa e acesso por perfil.
 **Depends on**: Phase 1
@@ -42,7 +52,11 @@ Plans:
   1. Usuario autorizado consegue corrigir metadados de faturacao e cada alteracao fica registrada com antes/depois e responsavel.
   2. Operacoes criticas de faturacao e stock geram logs auditaveis consultaveis por periodo e tipo de evento.
   3. Usuario sem permissao adequada nao consegue criar, editar ou auditar dados criticos; usuario com perfil correto consegue.
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 02-01-PLAN.md - Definir taxonomia de eventos e criar Wave 0 de testes para auditoria e permissoes criticas (BILL-03, INT-02, INT-03).
+- [ ] 02-02-PLAN.md - Implementar correcao de metadados de faturacao com diff auditavel e gate por perfil em compras (BILL-03, INT-02, INT-03).
+- [ ] 02-03-PLAN.md - Endurecer logging/autorizacao de stock e guards de UI/rotas com consulta auditavel por periodo e tipo (INT-02, INT-03).
 **UI hint**: yes
 
 ### Phase 3: Stock Integrado a Compras
@@ -81,11 +95,12 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
+Phases execute in numeric order: 1 -> 1.1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Faturacao e Compliance de Compras | 0/TBD | Not started | - |
+| 1.1. Limpeza de funcionalidades obsoletas e simplificacao de fluxos legados | 1/1 | Complete | 2026-03-24 |
 | 2. Integridade e Seguranca Operacional | 0/TBD | Not started | - |
 | 3. Stock Integrado a Compras | 0/TBD | Not started | - |
 | 4. Lotes, Ajustes e Auditoria de Stock | 0/TBD | Not started | - |

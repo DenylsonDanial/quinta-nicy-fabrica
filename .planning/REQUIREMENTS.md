@@ -6,7 +6,7 @@
 
 - [x] **BILL-01**: Usuario pode registrar compra com numero de fatura obrigatorio e fornecedor associado.
 - [x] **BILL-02**: Usuario pode consultar historico de compras por periodo, fornecedor e numero de fatura.
-- [ ] **BILL-03**: Usuario pode corrigir metadados de faturacao com trilha de auditoria.
+- [x] **BILL-03**: Usuario pode corrigir metadados de faturacao com trilha de auditoria.
 - [x] **BILL-04**: Sistema impede fechamento de compra sem campos fiscais minimos definidos para o negocio.
 
 ### Stock Operacional
@@ -20,8 +20,8 @@
 ### Integridade e Seguranca
 
 - [ ] **INT-01**: Sistema garante consistencia entre faturacao de compras e saldo de stock sem divergencia silenciosa.
-- [ ] **INT-02**: Sistema registra logs auditaveis para operacoes criticas de faturacao e stock.
-- [ ] **INT-03**: Sistema aplica permissoes por perfil para criar, editar e auditar dados criticos.
+- [x] **INT-02**: Sistema registra logs auditaveis para operacoes criticas de faturacao e stock.
+- [x] **INT-03**: Sistema aplica permissoes por perfil para criar, editar e auditar dados criticos.
 
 ### Preparacao para Producao
 
@@ -47,7 +47,7 @@
 |-------------|-------|--------|
 | BILL-01 | Phase 1 | Complete |
 | BILL-02 | Phase 1 | Complete |
-| BILL-03 | Phase 2 | Pending |
+| BILL-03 | Phase 2 | Complete |
 | BILL-04 | Phase 1 | Complete |
 | STK-01 | Phase 3 | Pending |
 | STK-02 | Phase 3 | Pending |
@@ -55,8 +55,8 @@
 | STK-04 | Phase 4 | Pending |
 | STK-05 | Phase 4 | Pending |
 | INT-01 | Phase 3 | Pending |
-| INT-02 | Phase 2 | Pending |
-| INT-03 | Phase 2 | Pending |
+| INT-02 | Phase 2 | Complete |
+| INT-03 | Phase 2 | Complete |
 | PRD-01 | Phase 5 | Pending |
 | PRD-02 | Phase 5 | Pending |
 
