@@ -3,6 +3,15 @@ import { handleSupabaseError, parseProductName } from '../../core/services/servi
 import { Purchase, PurchaseItem, StockItem, StockMovement } from '../../core/types/types';
 import { stockService } from './stockService';
 import { getTodayDateString } from '../../core/utils/dateUtils';
+import { auditService } from '../../core/services/auditService';
+import { AUDIT_EVENT_CATALOG } from '../../core/services/auditEvents';
+import { permissionsService } from '../../core/services/permissionsService';
+
+interface PurchaseActorContext {
+  userId: string;
+  userName?: string;
+  userEmail?: string;
+}
 
 interface PurchaseComplianceInput {
   supplierId?: string | null;
@@ -306,16 +315,28 @@ export const purchaseService = {
     }
   },
 
-  async updatePurchase(id: string, updates: Partial<Purchase>, updateStock = false): Promise<boolean> {
+  async updatePurchase(
+    id: string,
+    updates: Partial<Purchase>,
+    updateStock = false,
+    actor?: PurchaseActorContext,
+  ): Promise<boolean> {
     if (!id) return false;
     if (!isSupabaseConfigured() || !supabase) return false;
     try {
       // Buscar dados antigos para comparar e reverter stock se necessario
       const { data: oldRow } = await supabase
         .from('purchases')
-        .select('items, date, supplier_id, supplier_name, invoice_number')
+        .select('items, date, supplier_id, supplier_name, invoice_number, payment_status, payment_date, notes')
         .eq('id', id)
         .single();
+
+      if (actor?.userId) {
+        const authorized = await permissionsService.checkPermission(actor.userId, 'purchases.edit');
+        if (!authorized) {
+          return false;
+        }
+      }
 
       const complianceError = validatePurchaseCompliance({
         supplierId: updates.supplierId ?? oldRow?.supplier_id,
@@ -398,6 +419,35 @@ export const purchaseService = {
         const invoiceNumber = updates.invoiceNumber ?? oldRow?.invoice_number;
         await applyPurchaseStock(id, updates.items, orderDate, 'add', supplierName, invoiceNumber);
         console.log('[updatePurchase] Stock atualizado com sucesso');
+      }
+
+      const oldMetadata = {
+        supplierId: oldRow?.supplier_id ?? null,
+        supplierName: oldRow?.supplier_name ?? null,
+        invoiceNumber: oldRow?.invoice_number ?? null,
+        paymentStatus: oldRow?.payment_status ?? null,
+        paymentDate: oldRow?.payment_date ?? null,
+        notes: oldRow?.notes ?? null,
+      };
+      const newMetadata = {
+        supplierId: updates.supplierId ?? oldRow?.supplier_id ?? null,
+        supplierName: updates.supplierName ?? oldRow?.supplier_name ?? null,
+        invoiceNumber: updates.invoiceNumber ?? oldRow?.invoice_number ?? null,
+        paymentStatus: updates.paymentStatus ?? oldRow?.payment_status ?? null,
+        paymentDate: updates.paymentDate ?? oldRow?.payment_date ?? null,
+        notes: updates.notes ?? oldRow?.notes ?? null,
+      };
+      if (JSON.stringify(oldMetadata) !== JSON.stringify(newMetadata)) {
+        await auditService.logAction({
+          action: AUDIT_EVENT_CATALOG.purchase.metadataCorrected.action,
+          entityType: AUDIT_EVENT_CATALOG.purchase.metadataCorrected.entityType,
+          entityId: id,
+          userId: actor?.userId,
+          userName: actor?.userName,
+          userEmail: actor?.userEmail,
+          oldData: oldMetadata,
+          newData: newMetadata,
+        });
       }
 
       return true;
