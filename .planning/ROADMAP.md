@@ -13,7 +13,7 @@ Roadmap de migracao brownfield de loja para fabrica com foco inicial em faturaca
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Faturacao e Compliance de Compras** - Garantir registro fiscal minimo e consulta confiavel de compras.
-- [ ] **Phase 2: Integridade e Seguranca Operacional** - Fechar trilha auditavel e controle de permissao nas operacoes criticas.
+- [x] **Phase 2: Integridade e Seguranca Operacional** - Fechar trilha auditavel e controle de permissao nas operacoes criticas.
 - [ ] **Phase 3: Stock Integrado a Compras** - Sincronizar entradas de stock com compras faturadas sem divergencia silenciosa.
 - [ ] **Phase 4: Lotes, Ajustes e Auditoria de Stock** - Consolidar governanca de lotes, ajustes controlados e auditoria operacional.
 - [ ] **Phase 5: Base de Dados para Producao** - Preparar classificacao e estrutura para ordens de producao futuras sem quebrar fluxo atual.
@@ -54,9 +54,9 @@ Plans:
   3. Usuario sem permissao adequada nao consegue criar, editar ou auditar dados criticos; usuario com perfil correto consegue.
 **Plans**: 3 plans
 Plans:
-- [ ] 02-01-PLAN.md - Definir taxonomia de eventos e criar Wave 0 de testes para auditoria e permissoes criticas (BILL-03, INT-02, INT-03).
-- [ ] 02-02-PLAN.md - Implementar correcao de metadados de faturacao com diff auditavel e gate por perfil em compras (BILL-03, INT-02, INT-03).
-- [ ] 02-03-PLAN.md - Endurecer logging/autorizacao de stock e guards de UI/rotas com consulta auditavel por periodo e tipo (INT-02, INT-03).
+- [x] 02-01-PLAN.md - Definir taxonomia de eventos e criar Wave 0 de testes para auditoria e permissoes criticas (BILL-03, INT-02, INT-03).
+- [x] 02-02-PLAN.md - Implementar correcao de metadados de faturacao com diff auditavel e gate por perfil em compras (BILL-03, INT-02, INT-03).
+- [x] 02-03-PLAN.md - Endurecer logging/autorizacao de stock e guards de UI/rotas com consulta auditavel por periodo e tipo (INT-02, INT-03).
 **UI hint**: yes
 
 ### Phase 3: Stock Integrado a Compras
@@ -101,7 +101,7 @@ Phases execute in numeric order: 1 -> 1.1 -> 2 -> 3 -> 4 -> 5
 |-------|----------------|--------|-----------|
 | 1. Faturacao e Compliance de Compras | 0/TBD | Not started | - |
 | 1.1. Limpeza de funcionalidades obsoletas e simplificacao de fluxos legados | 1/1 | Complete | 2026-03-24 |
-| 2. Integridade e Seguranca Operacional | 0/TBD | Not started | - |
+| 2. Integridade e Seguranca Operacional | 3/3 | Complete | 2026-03-24 |
 | 3. Stock Integrado a Compras | 0/TBD | Not started | - |
 | 4. Lotes, Ajustes e Auditoria de Stock | 0/TBD | Not started | - |
 | 5. Base de Dados para Producao | 0/TBD | Not started | - |
